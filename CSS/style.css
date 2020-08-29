@@ -1,0 +1,47 @@
+*{
+    margin: 0;
+}
+
+#menu{
+    z-index: 10;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.9);
+   
+}
+
+#menu p:nth-child(1){
+    position: absolute;
+    font-style: italic;
+    font-family: calibri;
+    font-size: 5rem;
+    top: 25vh;
+    left: 45vw;
+    color: white;
+}
+
+#menu img{
+    position: absolute;
+    top: 45vh;
+    left: 49vw;
+    height: 70px;
+    width: 70px;
+}
+
+#menu p:nth-child(2){
+    position: absolute;
+    font-family: calibri;
+    font-size: 1.8rem;
+    top: 60vh;
+    left: 33vw;
+    color:rgba(250, 250, 250,0.5);
+}
+
+
+#canvas{
+    display: block;
+    height: 100vh;
+    width: 100vw;
+    background-color: blue;
+}
