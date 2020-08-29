@@ -1,5 +1,6 @@
 *{
     margin: 0;
+    padding: 0;
 }
 
 #menu{
@@ -44,4 +45,26 @@
     height: 100vh;
     width: 100vw;
     background-color: blue;
+}
+
+
+#cur_score {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 70px;
+    font-family: penultimate, sans-serif;
+    color: #FFFEFD;
+}
+h1
+{
+    font-size: 30px;;
+}
+#high_score {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 70px;
+    font-family: penultimate, sans-serif;
+    color: #FFFEFD;
 }
