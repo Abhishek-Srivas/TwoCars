@@ -3,20 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>2 Cars</title>
     <!-------Stylesheet----->
     <link rel="stylesheet" href="/CSS/style.css">
 </head>
 <body>
-    <div id="menu">
+    <!----Start Menu----->
+    <div id="startMenu">
         <p>2 Cars</p>
         <p>Let's play,Use left and right key to play the game</p>
-        <img src="/Images/playGame.png" alt="Play Game">
+        <img src="/Images/playGame.png" alt="Play Game" id="playbutton" onclick="playbutton()">
         
     </div>
-    <div id="cur_score"><h1>YOUR SCORE</h1>0</div>
+    <!-------Restart Menu---------->
+    <div id="restartMenu">
+        <p>2 Cars</p>
+        <p>Let's play,Use left and right key to play the game</p>
+        <img src="/Images/restartGame.png" alt="Play Game" id="playbutton" onclick="playbutton()">  
+    </div>
+    <!------Car score and High Score Display------>
+    <div id="car_score"><h1>YOUR SCORE</h1>0</div>
     <div id="high_score"><h1>HIGH SCORE</h1> 0</div>
+    <!------Canvas for game-->
     <canvas id="canvas"></canvas>
+    <!-------JavaScript File-->
     <script src="/JS/app.js"></script>
 </body>
 </html>
