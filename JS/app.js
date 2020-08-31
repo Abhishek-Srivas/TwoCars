@@ -18,9 +18,61 @@ var bluecar= new Image();
 redcar.src="../Images/Red.png"; // Set source path
 bluecar.src="../Images/Blue.png";
 
+function component_of_car(type) {
+    if(type == "red") {
+        this.cur = "left";//initial side on lane
+        //copy image to this ponter
+        this.car = redcar,this.x = width/2 - 180,this.y = height - 180;
+    } 
+    else 
+    {
+        this.cur= "right";//initial side on lane
+        //copy image to this ponter
+        this.car = bluecar,this.x = width/2 + 120,this.y = height - 180;
+    }
+
+    this.newPos = function () {
+        c.drawImage(this.car, this.x, this.y);
+    };
+
+    this.next_pos = function () 
+    {
+        if(this.cur== "left") 
+        {
+            this.cur= "right",this.x += 100; //updating next pos to right
+        } 
+        else 
+        {
+            this.cur= "left",this.x -= 100; //updating next pos to left
+        }
+    };
+}
+
+//create new cars instance,not drawing again
+var redone = new component_of_car("red");
+var blueone = new component_of_car("blue");
+
+// adding keyboard controllers
+document.addEventListener("keydown",move_car,false); 
+function move_car(e)
+{
+    switch(e.keyCode)
+    {
+        case 37:
+            //left key pressed
+            redone.next_pos();
+            break;
+
+        case 39:
+            //right key is presed
+            blueone.next_pos();
+            break;
+
+    }
+}
 
 
-window.onload = function () //onload is used to draw when image has loaded
+function drawLaneandObstacles() //onload is used to draw when image has loaded
 {   
     //to draw a line passed x,y,width,height
     c.fillStyle = "#fff";
@@ -29,9 +81,6 @@ window.onload = function () //onload is used to draw when image has loaded
     c.fillRect(width/2-200,0,2,height);
     c.fillRect(width/2+100,0,2,height);
     c.fillRect(width/2+200,0,2,height);
-    //draw image function name coordinates
-    c.drawImage(redcar,width/2 - 180,height-180);
-    c.drawImage(bluecar,width/2 +120,height-180);
 
     /*------------RED CIRCLE---------------W3schools*/
     c.strokeStyle = "red";
@@ -108,14 +157,26 @@ window.onload = function () //onload is used to draw when image has loaded
     c.fill();
 };
 
-/*
-fillrect refernce from http://drawingincode.com/lessons/reference/fillrect/index.html
-*/
+function all_function_call()
+{
+    clearCanvas();
+    drawLaneandObstacles();
+    redone.newPos();
+    blueone.newPos();
+}
 
 
 // to hide the start screen while playing
 function playbutton(){
       document.querySelector('#startMenu').style.display = "none";
 }
+window.onload = function () {
+    
+    setInterval(all_function_call,1);
+};
+
+/*
+fillrect refernce from http://drawingincode.com/lessons/reference/fillrect/index.html
+*/
 
 
