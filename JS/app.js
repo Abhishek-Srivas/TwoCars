@@ -18,7 +18,9 @@ function clearCanvas()
     c.clearRect(0, 0, width, height); 
 }
 
-
+function restartbutton(){ 
+    window.location.reload();
+}
 // Create new img element
 var redcar = new Image(); 
 var bluecar= new Image();  
@@ -32,12 +34,12 @@ function component_of_car(colour)
         //initial side on lane
         this.current = "right",
         //copy image to this pointer
-        this.car = redcar,this.x = width/2 - 180,this.y = height - 180;
+        this.car = bluecar,this.x = width/2 - 180,this.y = height - 180;
     else
         //initial side on lane
         this.current= "left",
         //copy image to this pointer
-        this.car = bluecar,this.x = width/2 + 120,this.y = height - 180;
+        this.car = redcar,this.x = width/2 + 120,this.y = height - 180;
         
 
     this.newPos = function ()
@@ -90,10 +92,16 @@ function move_car(e)
     }
 }
 
+function restart(){
+    
+    document.getElementById("restartMenu").style.display = "block";
+}
+
 
 
 function collision(){
-    alert("colliosion") //To stop all the event while collison
+    restart();
+
 }
 
 
@@ -201,9 +209,9 @@ function generated_object(color)
     this.update = function () 
     {
         this.posY += 10;
-        console.log(  Math.floor( Math.sqrt( Math.pow(this.posX - redone.x , 2) + Math.pow(this.posY - redone.y,2) ) )     )  //to get the value of collision logic
+        console.log(  Math.floor( Math.sqrt( Math.pow(this.posX - redone.x , 2) + Math.pow(this.posY - redone.y,2) ) ) || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  < 40 )    )  //to get the value of collision logic
 
-        if(Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  < 40 )){
+        if(Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  < 40 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  < 40 )){
             collision();     //call for collision func
         }
     }
@@ -237,14 +245,17 @@ function playbutton(){
 function bg_call() {
 
     //generating obstacles and storing in an array
-    setInterval
+   var id =  setInterval
     (function () {
         red_circle_rectangles.push(new generated_object("red"));
         blue_circles_rectangles.push(new generated_object("blue"));
     }, 1000);
 
-    setInterval(all_function_call,30);
+    var id1 = setInterval(all_function_call,20);
 };
+
+
+
 
 /*
 fillrect refernce from http://drawingincode.com/lessons/reference/fillrect/index.html
