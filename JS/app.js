@@ -17,6 +17,8 @@ function clearCanvas()
     //it is used to clear the pixels 
     c.clearRect(0, 0, width, height); 
 }
+
+
 // Create new img element
 var redcar = new Image(); 
 var bluecar= new Image();  
@@ -50,7 +52,7 @@ function component_of_car(colour)
 
     this.next_pos = function () 
     {
-        if(this.current== "left") 
+        if(this.current == "left") 
         {
             //updating next pos to right
             this.current= "right",this.x -= 100; 
@@ -82,13 +84,17 @@ function move_car(e)
 
         case 39:
             //right key is presed
-            redone.next_pos();
-            
+            redone.next_pos();  
             break;
 
     }
 }
 
+
+
+function collision(){
+    alert("colliosion") //To stop all the event while collison
+}
 
 
 function drawTrack()
@@ -108,11 +114,13 @@ function drawTrack()
     c.fillRect(width/2+200,0,2,height);
 
 };
+
 function random_value()
 {
-    //returns 0 or 1
+    //returns 0 or 1,2
     return Math.floor((Math.random()*2));
 }
+
 function draw_circles(X,Y,Z)
 {
     //outer most part
@@ -136,6 +144,7 @@ function draw_circles(X,Y,Z)
     c.fillStyle = Z;
     c.fill();
 }
+
 function draw_rect(X,Y,Z)
 {
         //outer portion in solid color
@@ -155,7 +164,7 @@ function generated_object(color)
 {
     //coordinates
     this.posX=0;
-    this.posY=0;
+    this.posY=-100;
 
     //colour of obstacle
     if(color=="red") this.color="#FE3E67";
@@ -192,6 +201,11 @@ function generated_object(color)
     this.update = function () 
     {
         this.posY += 10;
+        console.log(  Math.floor( Math.sqrt( Math.pow(this.posX - redone.x , 2) + Math.pow(this.posY - redone.y,2) ) )     )  //to get the value of collision logic
+
+        if(Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  < 40 )){
+            collision();     //call for collision func
+        }
     }
 }
 
@@ -217,9 +231,10 @@ function all_function_call()
 // to hide the start screen while playing
 function playbutton(){
       document.querySelector('#startMenu').style.display = "none";
-        bg();
+        bg_call();
     }
-function bg() {
+
+function bg_call() {
 
     //generating obstacles and storing in an array
     setInterval
@@ -228,7 +243,7 @@ function bg() {
         blue_circles_rectangles.push(new generated_object("blue"));
     }, 1000);
 
-    setInterval(all_function_call,20);
+    setInterval(all_function_call,30);
 };
 
 /*
