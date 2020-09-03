@@ -211,12 +211,17 @@ function generated_object(color)
         this.posY += 10;
         console.log(  Math.floor( Math.sqrt( Math.pow(this.posX - redone.x , 2) + Math.pow(this.posY - redone.y,2) ) ) || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  < 40 )    )  //to get the value of collision logic
 
-        if(Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  < 40 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  < 40 )){
+        if(this.shape=="rect" && (Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  < 40 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  < 40 )))
+        {
             collision();     //call for collision func
         }
+        if(this.shape=="circle" && (Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  < 40 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  < 40 )))
+        {
+            //score++;     here we will do score update 
+        }
+        
     }
 }
-
 
 function all_function_call()
 {
@@ -253,12 +258,3 @@ function bg_call() {
 
     var id1 = setInterval(all_function_call,20);
 };
-
-
-
-
-/*
-fillrect refernce from http://drawingincode.com/lessons/reference/fillrect/index.html
-*/
-
-
