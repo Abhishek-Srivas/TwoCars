@@ -7,6 +7,7 @@ canvas.width = width;
 canvas.height = height;
 canvas.style.backgroundColor = "#25337a";
 c.fillStyle = "grey"; //line color
+var score = 0;
 
 //array to store generated obstacles
 var red_circle_rectangles= [];  //for red one 
@@ -93,7 +94,6 @@ function move_car(e)
 }
 
 function restart(){
-    
     document.getElementById("restartMenu").style.display = "block";
 }
 
@@ -161,11 +161,11 @@ function draw_rect(X,Y,Z)
 
         //just inner part part with white color
         c.fillStyle = '#ffffff';
-        c.fillRect(X-2, Y+5, 30, 30);
+        c.fillRect(X-6, Y+2, 35, 35);
 
         //middle part
         c.fillStyle = Z;
-        c.fillRect(X-4, Y+10, 20, 20);
+        c.fillRect(X-1, Y+7, 25, 25);
 }
 
 function generated_object(color)
@@ -215,9 +215,13 @@ function generated_object(color)
         {
             collision();     //call for collision func
         }
-        if(this.shape=="circle" && (Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  < 40 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  < 40 )))
+        if(this.shape=="circle" && (Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  == 39 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  == 39 )))
         {
-            //score++;     here we will do score update 
+            score++;
+            document.getElementById("score").innerHTML = score;
+        }
+        else if(this.shape=="circle" && (this.posY > redone.y || this.posY > blueone.y) ){ //check this plzzzzzz
+            collision();
         }
         
     }
@@ -256,5 +260,5 @@ function bg_call() {
         blue_circles_rectangles.push(new generated_object("blue"));
     }, 1000);
 
-    var id1 = setInterval(all_function_call,20);
+    var id1 = setInterval(all_function_call,30);
 };
