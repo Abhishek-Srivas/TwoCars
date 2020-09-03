@@ -28,12 +28,12 @@ function component_of_car(colour)
 {
     if(colour == "blue") 
         //initial side on lane
-        this.cur = "right",
+        this.current = "right",
         //copy image to this pointer
         this.car = redcar,this.x = width/2 - 180,this.y = height - 180;
     else
         //initial side on lane
-        this.cur= "left",
+        this.current= "left",
         //copy image to this pointer
         this.car = bluecar,this.x = width/2 + 120,this.y = height - 180;
         
@@ -50,15 +50,15 @@ function component_of_car(colour)
 
     this.next_pos = function () 
     {
-        if(this.cur== "left") 
+        if(this.current== "left") 
         {
             //updating next pos to right
-            this.cur= "right",this.x += 100; 
+            this.current= "right",this.x -= 100; 
         } 
         else 
         {
             //updating next pos to left
-            this.cur= "left",this.x -= 100; 
+            this.current= "left",this.x += 100; 
         }
     };
 }
@@ -68,24 +68,27 @@ var redone = new component_of_car("red");
 var blueone = new component_of_car("blue");
 
 // adding keyboard controllers
-document.addEventListener("keydown",move_car,false);
+document.addEventListener('keydown',move_car,false);
 //function for keyborad call 
+
 function move_car(e)
 {
     switch(e.keyCode)
     {
         case 37:
             //left key pressed
-            redone.next_pos();
+            blueone.next_pos();
             break;
 
         case 39:
             //right key is presed
-            blueone.next_pos();
+            redone.next_pos();
+            
             break;
 
     }
 }
+
 
 
 function drawTrack()
@@ -214,8 +217,9 @@ function all_function_call()
 // to hide the start screen while playing
 function playbutton(){
       document.querySelector('#startMenu').style.display = "none";
-}
-window.onload = function () {
+        bg();
+    }
+function bg() {
 
     //generating obstacles and storing in an array
     setInterval
@@ -224,7 +228,7 @@ window.onload = function () {
         blue_circles_rectangles.push(new generated_object("blue"));
     }, 1000);
 
-    setInterval(all_function_call,30);
+    setInterval(all_function_call,20);
 };
 
 /*
