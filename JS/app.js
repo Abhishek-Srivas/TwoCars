@@ -32,20 +32,23 @@ bluecar.src="../Images/Blue.png";
 function component_of_car(colour) 
 {
     if(colour == "blue") 
+    {
         //initial side on lane
         this.current = "right",
         //copy image to this pointer
-        this.car = bluecar,this.x = width/2 - 180,this.y = height - 180;
+        this.car = bluecar,this.x = width/2 - 180,this.y = height - 150;
+    }
     else
+    {
         //initial side on lane
         this.current= "left",
         //copy image to this pointer
-        this.car = redcar,this.x = width/2 + 120,this.y = height - 180;
-        
-
+        this.car = redcar,this.x = width/2 + 120,this.y = height - 150;
+    }
+    
     this.newPos = function ()
     {
-        //drawing car at new position 
+        //drawing car at new position passing image and x ,y co-ordinate
         c.drawImage(this.car, this.x, this.y);
     };
 
@@ -128,8 +131,8 @@ function random_value()
     //returns 0 or 1,2
     return Math.floor((Math.random()*2));
 }
-
-function draw_circles(X,Y,Z)
+/* calling draw circles function */
+function draw_circles(X,Y,Z) //passing x,y co-ordinate and color
 {
     //outer most part
     c.beginPath();//used to draw sth from beginning no contact from last drawing otherwise all drawing will join each other
@@ -138,21 +141,21 @@ function draw_circles(X,Y,Z)
     c.fillStyle = Z; //colour
     c.fill();
 
-    //middle part
+    //middle part white color
     c.beginPath();
     c.arc(X, Y, 25*0.8, 0, 2*Math.PI);
     c.stroke(); 
     c.fillStyle ="#ffffff";
     c.fill();
 
-    //inner most part
+    //inner most part 
     c.beginPath();
     c.arc(X, Y, 25*0.5, 0, 2*Math.PI);
     c.stroke(); 
     c.fillStyle = Z;
     c.fill();
 }
-
+/* calling draw rectangle function */
 function draw_rect(X,Y,Z)
 {
         //outer portion in solid color
@@ -168,6 +171,7 @@ function draw_rect(X,Y,Z)
         c.fillRect(X-1, Y+7, 25, 25);
 }
 
+/*function for printing objects we stored in array after generating*/
 function generated_object(color)
 {
     //coordinates
@@ -199,30 +203,60 @@ function generated_object(color)
     if(color == "red") this.posX += 200;
 
     //draw circles and rectangles acc to random guessed as above
-    
+
+    // it will remain 1 until it collides with car and after collision it becomes zero and draw function doesn't execute
+    var status=1;
+    //rectnagle disappear after travelling whole screen height
+    var status_r=1; 
+
     this.draw = function () 
     {
-        if(this.shape == "rect") draw_rect(this.posX,this.posY,this.color);
-        else draw_circles(this.posX,this.posY,this.color);
+        if(this.shape == "rect")
+        {
+            if(status_r==1) //if not travelled whole screen
+            {
+                draw_rect(this.posX,this.posY,this.color);
+            }
+        } 
+        else if(status==1) //before collision 
+        {
+            draw_circles(this.posX,this.posY,this.color);
+        }
+            
+    
     };
 
     this.update = function () 
     {
         this.posY += 10;
+
         console.log(  Math.floor( Math.sqrt( Math.pow(this.posX - redone.x , 2) + Math.pow(this.posY - redone.y,2) ) ) || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  < 40 )    )  //to get the value of collision logic
 
         if(this.shape=="rect" && (Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  < 40 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  < 40 )))
         {
             collision();     //call for collision func
         }
-        if(this.shape=="circle" && (Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  == 39 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  == 39 )))
+        else if(this.posY ==height) 
         {
-            score++;
-            document.getElementById("score").innerHTML = score;
+            //for disappearing rect obj 
+            status_r=0;
         }
-        else if(this.shape=="circle" && (this.posY > redone.y || this.posY > blueone.y) ){ //check this plzzzzzz
-            collision();
+        if(this.shape=="circle" && (Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  == 38 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  == 38 )))
+        {
+            status=0; //disappearing circle after collision
+
+            score++; //score updated after each collision 
+
+            document.getElementById("score").innerHTML = score; //calling func to print score
         }
+        /*this is a special condition*/
+        /* if circle and car collison doesnt occur game is over */
+        else if(this.shape=="circle" && this.posY >=750 && status==1)
+        {
+            collision(); 
+        }
+        
+        
         
     }
 }
