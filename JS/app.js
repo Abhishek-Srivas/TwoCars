@@ -7,14 +7,15 @@ canvas.width = width;
 canvas.height = height;
 canvas.style.backgroundColor = "#25337a";
 c.fillStyle = "grey"; //line color
-var score = 0;
-var draw_again_status=1;
+var score = 0; // to count sscore
+var draw_again_status=1;  
+var speed_counter = 25; //to set the speed of car
 //array to store generated obstacles
 var red_circle_rectangles= [];  //for red one 
 var blue_circles_rectangles= [];// for blue one
 
 const bgsound=new Audio();
-bgsound.src="audio/bgmusic.mpeg";
+bgsound.src="audio/bgmusic.mp3";
 bgsound.play();
 
 //select sound element
@@ -282,6 +283,10 @@ function generated_object(color)
             status=0; //disappearing circle after collision
 
             score++; //score updated after each collision 
+            if(score % 20 == 0 && speed_counter > 20){
+                console.log("speed Increased");
+                speed_counter--;
+            }
 
             document.getElementById("score").innerHTML = score; //calling func to print score
         }
@@ -331,5 +336,9 @@ function bg_call() {
         blue_circles_rectangles.push(new generated_object("blue"));
     }, 1000);
 
-    var id1 = setInterval(all_function_call,15);
+   speed_of_obj();
 };
+
+function speed_of_obj(){
+    var id1 = setInterval(all_function_call,speed_counter);
+}

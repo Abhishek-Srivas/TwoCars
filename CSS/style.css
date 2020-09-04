@@ -42,6 +42,25 @@
 }
 
 
+#startMenu p:nth-child(3){
+    position: absolute;
+    font-family: calibri;
+    font-size: 2rem;
+    top: 70vh;
+    left: 33vw;
+    color:rgba(255, 255, 255,0.7);
+}
+
+#startMenu ul {
+    
+    position: absolute;
+    font-family: calibri;
+    font-size: 1.8rem;
+    top: 75vh;
+    left: 33vw;
+    color:rgba(250, 250, 250,0.5);
+}
+
 #canvas{
     display: block;
     height: 100vh;
