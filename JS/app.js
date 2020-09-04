@@ -18,6 +18,9 @@ const bgsound=new Audio();
 bgsound.src="audio/bgmusic.mp3";
 bgsound.play();
 
+
+
+
 //select sound element
 const soundElement=document.getElementById("sound");
 soundElement.addEventListener("click",audioManager);
@@ -133,6 +136,7 @@ function move_car(e)
 
 function restart(){
     document.getElementById("restartMenu").style.display = "block";
+    document.getElementById("endscore").innerHTML = score;
 }
 
 
