@@ -8,11 +8,28 @@ canvas.height = height;
 canvas.style.backgroundColor = "#25337a";
 c.fillStyle = "grey"; //line color
 var score = 0;
-
+var draw_again_status=1;
 //array to store generated obstacles
 var red_circle_rectangles= [];  //for red one 
 var blue_circles_rectangles= [];// for blue one
 
+const bgsound=new Audio();
+bgsound.src="audio/bgmusic.mpeg";
+bgsound.play();
+
+//select sound element
+const soundElement=document.getElementById("sound");
+soundElement.addEventListener("click",audioManager);
+function audioManager()
+{
+    //change image sound on off
+    let imgSrc=soundElement.getAttribute("src");
+    let sound_img=imgSrc=="audio/icons8-audio-100.png"?"audio/icons8-no-audio-80.png":"audio/icons8-audio-100.png";
+     soundElement.setAttribute("src",sound_img);
+
+    //mute and unmute
+    bgsound.muted=bgsound.muted?false:true;
+}
 function clearCanvas()
 {
     //it is used to clear the pixels 
@@ -95,6 +112,23 @@ function move_car(e)
 
     }
 }
+/*document.addEventListener('keyup',move_car,false);
+function move_car(e)
+{
+    switch(e.keyCode)
+    {
+        case 37:
+            //left key pressed
+            blueone.next_pos();
+            break;
+
+        case 39:
+            //right key is presed
+            redone.next_pos();  
+            break;
+
+    }
+}*/
 
 function restart(){
     document.getElementById("restartMenu").style.display = "block";
@@ -208,7 +242,7 @@ function generated_object(color)
     var status=1;
     //rectnagle disappear after travelling whole screen height
     var status_r=1; 
-
+    if(draw_again_status){
     this.draw = function () 
     {
         if(this.shape == "rect")
@@ -225,6 +259,7 @@ function generated_object(color)
             
     
     };
+}
 
     this.update = function () 
     {
@@ -234,6 +269,7 @@ function generated_object(color)
 
         if(this.shape=="rect" && (Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  < 40 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  < 40 )))
         {
+            draw_again_status=0;
             collision();     //call for collision func
         }
         else if(this.posY ==height) 
@@ -253,6 +289,7 @@ function generated_object(color)
         /* if circle and car collison doesnt occur game is over */
         else if(this.shape=="circle" && this.posY >=750 && status==1)
         {
+            draw_again_status=0;
             collision(); 
         }
         
@@ -294,5 +331,5 @@ function bg_call() {
         blue_circles_rectangles.push(new generated_object("blue"));
     }, 1000);
 
-    var id1 = setInterval(all_function_call,30);
+    var id1 = setInterval(all_function_call,15);
 };

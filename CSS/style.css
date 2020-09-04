@@ -47,8 +47,17 @@
     height: 100vh;
     width: 100vw;
     background-color: blue;
+    z-index:-1;
 }
 
+#sound
+{
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    position: absolute;
+    top: 620px;
+}
 
 #car_score {
     position: absolute;
