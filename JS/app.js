@@ -16,7 +16,7 @@ var blue_circles_rectangles= [];// for blue one
 
 const bgsound=new Audio();
 bgsound.src="audio/bgmusic.mp3";
-bgsound.play();
+
 
 
 
@@ -274,6 +274,7 @@ function generated_object(color)
 
         if(this.shape=="rect" && (Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  < 40 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  < 40 )))
         {
+            bgsound.muted=true;
             draw_again_status=0;
             collision();     //call for collision func
         }
@@ -298,6 +299,7 @@ function generated_object(color)
         /* if circle and car collison doesnt occur game is over */
         else if(this.shape=="circle" && this.posY >=750 && status==1)
         {
+            bgsound.muted=true;
             draw_again_status=0;
             collision(); 
         }
@@ -344,5 +346,6 @@ function bg_call() {
 };
 
 function speed_of_obj(){
+    bgsound.play();
     var id1 = setInterval(all_function_call,speed_counter);
 }
