@@ -14,10 +14,15 @@ var speed_counter = 25; //to set the speed of car
 var red_circle_rectangles= [];  //for red one 
 var blue_circles_rectangles= [];// for blue one
 
+/*audio part*/
 const bgsound=new Audio();
 bgsound.src="audio/bgmusic.mp3";
 
+const circlesound=new Audio();
+circlesound.src="audio/circles.mpeg";
 
+const collision_sound=new Audio();
+collision_sound.src="audio/collision.mpeg";
 
 
 
@@ -116,23 +121,7 @@ function move_car(e)
 
     }
 }
-/*document.addEventListener('keyup',move_car,false);
-function move_car(e)
-{
-    switch(e.keyCode)
-    {
-        case 37:
-            //left key pressed
-            blueone.next_pos();
-            break;
 
-        case 39:
-            //right key is presed
-            redone.next_pos();  
-            break;
-
-    }
-}*/
 
 function restart(){
     document.getElementById("restartMenu").style.display = "block";
@@ -276,6 +265,9 @@ function generated_object(color)
         {
             bgsound.muted=true;
             draw_again_status=0;
+            for (i = 0; i < 1; i++) {
+                collision_sound.play();
+              }
             collision();     //call for collision func
         }
         else if(this.posY ==height) 
@@ -285,6 +277,7 @@ function generated_object(color)
         }
         if(this.shape=="circle" && (Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  == 38 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  == 38 )))
         {
+            circlesound.play();
             status=0; //disappearing circle after collision
 
             score++; //score updated after each collision 
@@ -299,9 +292,11 @@ function generated_object(color)
         /* if circle and car collison doesnt occur game is over */
         else if(this.shape=="circle" && this.posY >=750 && status==1)
         {
+            status=0;
             bgsound.muted=true;
             draw_again_status=0;
             collision(); 
+            
         }
         
         
