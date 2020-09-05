@@ -188,14 +188,17 @@ function draw_circles(X,Y,Z) //passing x,y co-ordinate and color
 function draw_rect(X,Y,Z)
 {
         //outer portion in solid color
+        c.beginPath();
         c.fillStyle = Z;
         c.fillRect(X-8, Y, 40, 40);
 
         //just inner part part with white color
+        c.beginPath();
         c.fillStyle = '#ffffff';
         c.fillRect(X-6, Y+2, 35, 35);
 
         //middle part
+        c.beginPath();
         c.fillStyle = Z;
         c.fillRect(X-1, Y+7, 25, 25);
 }
@@ -286,7 +289,6 @@ function generated_object(color)
                 speed_counter--;
             }
             circlesound.play();
-            circlesound.pause();
             document.getElementById("score").innerHTML = score; }//calling func to print score
         /*this is a special condition*/
         /* if circle and car collison doesnt occur game is over */
