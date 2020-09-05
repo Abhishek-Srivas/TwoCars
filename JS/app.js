@@ -7,7 +7,8 @@ canvas.width = width;
 canvas.height = height;
 canvas.style.backgroundColor = "#25337a";
 c.fillStyle = "grey"; //line color
-var score = 0; // to count sscore
+var score = 0;
+var f=1; // to count sscore
 var draw_again_status=1;  
 var speed_counter = 25; //to set the speed of car
 //array to store generated obstacles
@@ -52,8 +53,8 @@ function restartbutton(){
 var redcar = new Image(); 
 var bluecar= new Image();  
 // Set source path
-redcar.src="../Images/Red.png"; 
-bluecar.src="../Images/Blue.png";
+redcar.src="Images/Red.png"; 
+bluecar.src="Images/Blue.png";
 
 function component_of_car(colour) 
 {
@@ -265,9 +266,8 @@ function generated_object(color)
         {
             bgsound.muted=true;
             draw_again_status=0;
-            for (i = 0; i < 1; i++) {
-                collision_sound.play();
-              }
+            if(f==1) collision_sound.play();
+              f=0;
             collision();     //call for collision func
         }
         else if(this.posY ==height) 
@@ -277,24 +277,26 @@ function generated_object(color)
         }
         if(this.shape=="circle" && (Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  == 38 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  == 38 )))
         {
-            circlesound.play();
+            circlesound.pause();
             status=0; //disappearing circle after collision
-
-            score++; //score updated after each collision 
+            if(f==1)
+            {score++; }//score updated after each collision 
             if(score % 20 == 0 && speed_counter > 20){
                 console.log("speed Increased");
                 speed_counter--;
             }
-
-            document.getElementById("score").innerHTML = score; //calling func to print score
-        }
+            circlesound.play();
+            circlesound.pause();
+            document.getElementById("score").innerHTML = score; }//calling func to print score
         /*this is a special condition*/
         /* if circle and car collison doesnt occur game is over */
         else if(this.shape=="circle" && this.posY >=750 && status==1)
         {
             status=0;
+            f=0;
             bgsound.muted=true;
             draw_again_status=0;
+            if(f==1) collision_sound.play();
             collision(); 
             
         }
@@ -310,14 +312,16 @@ function all_function_call()
     drawTrack();
     redone.newPos();
     blueone.newPos();
+    
     red_circle_rectangles.forEach(function (generated_object) {
         generated_object.update();
         generated_object.draw();
-    });
+    })
     blue_circles_rectangles.forEach(function (generated_object) {
         generated_object.update();
         generated_object.draw();
     })
+
     
 }
 
