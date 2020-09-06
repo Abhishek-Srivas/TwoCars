@@ -278,12 +278,13 @@ function generated_object(color)
             //for disappearing rect obj 
             status_r=0;
         }
-        if(this.shape=="circle" && (Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  == 38 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  == 38 )))
+        if(this.shape=="circle" && (Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - redone.x,2) + Math.pow(this.posY - redone.y,2)) )  < 40 )  || Math.sqrt(   Math.floor( Math.sqrt( Math.pow(this.posX - blueone.x,2) + Math.pow(this.posY - blueone.y,2)) )  <40 )))
         {
             circlesound.pause();
+            if(status==1)
+            {score++; }
             status=0; //disappearing circle after collision
-            if(f==1)
-            {score++; }//score updated after each collision 
+            //score updated after each collision 
             if(score % 20 == 0 && speed_counter > 20){
                 console.log("speed Increased");
                 speed_counter--;
