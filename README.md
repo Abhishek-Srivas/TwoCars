@@ -1,4 +1,4 @@
-link: carhttps://abhisheksrivas114319.github.io/TwoCars/
+link: https://abhisheksrivas114319.github.io/TwoCars/
 
 Rules:
   1. use left arrow key to control left car
